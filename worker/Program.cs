@@ -79,20 +79,6 @@ namespace Worker
                 }
                 dataSet.Tables.Add(dataTable);
             }
-            // Print the contents of the DataSet
-            //Console.WriteLine("Contents of DataSet:");
-            //foreach (DataTable table in dataSet.Tables)
-            //{
-                //Console.WriteLine($"Table: {table.TableName}");
-                //foreach (DataRow row in table.Rows)
-                //{
-                    //Console.WriteLine("Row:");
-                    //foreach (var item in row.ItemArray)
-                    //{
-                        //Console.WriteLine($"   {item}");
-                    //}
-                //}
-            //}
 
             return dataSet;
         }

@@ -41,7 +41,7 @@ namespace Worker
                         {
                             (1, 10.5),  // Example player ID and calculated handicap
                             (2, 8.2),   // Another example player ID and calculated handicap
-                            // Add more player IDs and handicaps as needed
+                           
                         };
 
                         // Update handicaps for all players
