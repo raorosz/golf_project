@@ -1,0 +1,69 @@
+services:
+  flask_app:
+    image: raorosz/golf-app:golf_app_v1.0
+    ports:
+      - "5000:80"
+    depends_on:
+      - mysql_db
+      - postgres_db
+    environment:
+      - FLASK_ENV=production
+      - MYSQL_HOST=mysql_db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=P@ssword
+      - MYSQL_DATABASE=golf_db
+      - POSTGRES_HOST=postgres_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=P@ssword
+      - POSTGRES_DB=postgres
+    networks:
+      - golf_network
+
+  worker_app:
+    image: raorosz/golf-app:worker_app_v1.0
+    depends_on:
+      - mysql_db
+      - postgres_db
+    environment:
+      - MYSQL_HOST=mysql_db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=P@ssword
+      - MYSQL_DATABASE=golf_db
+      - POSTGRES_HOST=postgres_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=P@ssword
+      - POSTGRES_DB=postgres
+    ports:
+      - "5001:80"
+      - "127.0.0.1:9229:9229"
+    networks:
+      - golf_network
+
+  mysql_db:
+    image: raorosz/golf-app:mysql_v1.0
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssword
+      MYSQL_DATABASE: golf_db
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d
+    networks:
+      - golf_network
+
+  postgres_db:
+    image: raorosz/golf-app:postgres_v1.0
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: P@ssword
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./worker/docker-entrypoint-initdb.d/postgres_dump_v1.sql:/docker-entrypoint-initdb.d/postgres_dump_v1.sql
+    networks:
+      - golf_network
+
+networks:
+  golf_network:
+    driver: bridge
