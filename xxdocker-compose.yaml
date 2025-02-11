@@ -1,6 +1,8 @@
+version: '3.8'
+
 services:
   flask_app:
-    image: ghcr.io/raorosz/golf-app:flask_app_v1.0
+    image: golf_app_v1.0
     ports:
       - "5000:80"
     depends_on:
@@ -20,7 +22,7 @@ services:
       - golf_network
 
   worker_app:
-    image: ghcr.io/raorosz/golf-app:worker_app_v1.0
+    image: worker_app_v1.0
     depends_on:
       - mysql_db
       - postgres_db
@@ -40,30 +42,26 @@ services:
       - golf_network
 
   mysql_db:
-    image: ghcr.io/raorosz/golf-app:mysql_v1.0
+    image: mysql_v1.0
     ports:
-      - "3307:3306"
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: P@ssword
       MYSQL_DATABASE: golf_db
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d
     networks:
       - golf_network
 
   postgres_db:
-    image: ghcr.io/raorosz/golf-app:postgres_v1.0
+    image: postgres_v1.0
     ports:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: P@ssword
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
-    volumes:
-      - ./worker/docker-entrypoint-initdb.d/postgres_dump_v1.sql:/docker-entrypoint-initdb.d/postgres_dump_v1.sql
     networks:
       - golf_network
 
 networks:
   golf_network:
-    driver: bridge
+    # External network definition removed
