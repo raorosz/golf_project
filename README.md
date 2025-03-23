@@ -9,7 +9,7 @@ The purpose of this app is to modernize the way golf scores and tournaments are 
 ## Technologies Used
 - **Frontend:** React Native
 - **Backend:** Flask with Python
-- **Database:** PostgreSQL or MongoDB
+- **Database:** PostgreSQL
 - **Architecture:** Microservices deployed in Docker containers
 
 This project is built with a focus on reliability, scalability, and user experience, employing modern technologies and architecture to ensure smooth operation and easy maintenance.
